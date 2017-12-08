@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0,user-scalable=no">
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<title>计算一个数回文数</title>
+		
+		<style type="text/css">
+			body {
+				background: #5BC0DE;
+			}
+			
+			button {
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+				-webkit-appearance: none;
+				padding: 0;
+				margin: 0;
+				outline: none;
+				border: none;
+				border-radius: 0;
+				background: transparent;
+			}
+			
+			.num {
+				padding: 5px 3px;
+				border: 2px solid #c12e2a;
+				border-radius: 5px;
+				background: #fff;
+			}
+			
+			.compute {
+				margin: 5px 0;
+				padding: 5px 25px;
+				border: 2px solid #c12e2a;
+				border-radius: 5px;
+				background: #bada55;
+			}
+		</style>
+	</head>
+	<body>
+		<div><input type="text" name="num" class="num" id="num" value="" /></div>
+		
+		<div><button class="compute" type="button" onclick="showHen()">开始计算</button></div>
+		
+		<div class="result"></div>
+		
+		<script type="text/javascript">
+			function showHen() {
+				var num = getHen($('#num').val() || "0");
+
+				$(".result").text(num);
+			}
+			
+			//获取回文数
+			function getHen(n) {
+				var m;
+				var result = n;
+				
+				//考虑到可能会卡死的问题，这里只循环10000次
+				for(var i = 0; i < 10000; i++) {
+
+					if(cn(result)) {
+						return result;
+					}
+					
+					n = result;
+					m = (n + "").split("").reverse().join("");
+					
+					result = sumStrings(n, m);
+					
+				}
+				console.info(result.length)
+				return "不存在" + result;
+			}
+
+			//验证一个数是否是回文数
+			function cn(x) {
+				var x2 = (x + "").split("").reverse().join("");
+				if(x == x2) {
+					return true;
+				}
+				return false;
+			}
+
+			//字符串数字相加
+			function sumStrings(a, b) {
+				var res = '';
+				var c = 0;
+				a = a.split('');
+				b = b.split('');
+				while(a.length || b.length || c) {
+					c += ~~a.pop() + ~~b.pop();
+					res = c % 10 + res;
+					c = c > 9;
+				}
+				return res.replace(/^0+/, '');
+			}
+		</script>
+	</body>
+</html>
